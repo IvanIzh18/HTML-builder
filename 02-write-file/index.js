@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-
 const { stdin, stdout } = process;
 
 stdout.write('Доброго дня Вам! Будьте любезны ввести текст.\n');
@@ -12,11 +11,9 @@ fs.writeFile(
         if (err) throw err;
     }
 );
-
 let text = '';
 stdin.on('data', data => {
     let dataStr = data.toString();
-
     if (dataStr.replace('\r\n', '') === 'exit') {
         process.exit();
     } else {
@@ -28,18 +25,8 @@ stdin.on('data', data => {
                 console.log('Файл был изменен');
             }
         );
-
     };
-
 });
-
 console.log(path.join(__dirname, 'text.txt'));
-
-
-
 process.on('exit', () => stdout.write('Удачи в изучении Node.js!'));
-
-process.on('SIGINT', () => {
-    stdout.write('Удачи в изучении Node.js!');
-    setTimeout(() => process.exit(), 1000);
-});
+process.on('SIGINT', () => process.exit());
