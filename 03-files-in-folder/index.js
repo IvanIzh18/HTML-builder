@@ -3,7 +3,6 @@ const path = require('path');
 
 let filesFiltr = [];
 let extNameFile = [];
-let sizeFile = [];
 
 fs.readdir(path.join(__dirname, 'secret-folder'), { withFileTypes: true },
     (err, files) => {
@@ -21,22 +20,14 @@ fs.readdir(path.join(__dirname, 'secret-folder'), { withFileTypes: true },
         }
         // console.log(extNameFile);
 
-
-        for (let item of filesFiltr) {
-            fs.stat(path.join(__dirname, 'secret-folder', item),
+        for (let i = 0; i < filesFiltr.length; i++) {
+            fs.stat(path.join(__dirname, 'secret-folder', filesFiltr[i]),
                 (err, stats) => {
                     if (err) throw err;
-                    sizeFile.push((stats.size / 1024).toFixed(3) + 'kb');
-                    // console.log(sizeFile);
+                    console.log(`${filesFiltr[i].replace(extNameFile[i], '')} - ${extNameFile[i].replace('.', '')} - ${(stats.size / 1024).toFixed(3) + 'kb'}`)
                 }
             );
         }
 
     }
 );
-setTimeout(() => {
-
-    for (let i = 0; i < filesFiltr.length; i++) {
-        console.log(`${filesFiltr[i].replace(extNameFile[i], '')} - ${extNameFile[i].replace('.', '')} - ${sizeFile[i]}`)
-    }
-}, 10)
